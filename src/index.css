@@ -1,0 +1,166 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Light palette (default) — every value here re-verified against WCAG 1.4.3
+   (4.5:1 for text) / 1.4.11 (3:1 for icons, dots, chart fills) in PB-055. */
+:root {
+  --ink: #17202b;
+  --bg: #f5f6f4;
+  --surface: #ffffff;
+  --line: #e2e5e1;
+  --muted: #66707b;
+  --action: #0f6b54;
+  /* Text/icon color sitting ON TOP of an --action-filled button. White clears
+     4.5:1 against --action in light mode; dark mode's brighter --action
+     needs a dark on-color instead (see below) — same token, different value. */
+  --on-action: #ffffff;
+  --flag: #c77d1f;
+  /* Darker variant of --flag for TEXT specifically — #c77d1f is only ~3.3:1
+     on white/bg (fine for icons/dots/chart fills, which only need 3:1 per
+     WCAG 1.4.11) but fails the 4.5:1 normal-text requirement (WCAG 1.4.3).
+     Same hue, darkened until it clears 4.5:1 against both --surface and --bg. */
+  --flag-text: #9d6318;
+  --danger: #b23a2e;
+  --on-danger: #ffffff;
+  --win: #0f6b54;
+
+  --stage-wishlist: #8a8f98;
+  --stage-applied: #3b6ea5;
+  --stage-oa: #7c5cb0;
+  --stage-interviewing: #c77d1f;
+  --stage-offer: #0f6b54;
+  --stage-rejected: #9aa0a6;
+
+  /* Elevation shadows as variables, not raw Tailwind shadow / hover:shadow
+     utilities — those bake in a fixed black rgba tint that reads fine on a
+     light background but is nearly invisible cast onto an already-dark one.
+     The dark-mode versions below are darker and add a faint light rim, the
+     standard elevation trick for dark UIs (a plain heavier black shadow
+     alone still does not read against a near-black page). */
+  --shadow-resting: 0 1px 2px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-elevated: 0 2px 4px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.1);
+  --shadow-popover: 0 4px 6px rgba(0, 0, 0, 0.08), 0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Dark palette — a from-scratch re-derivation, not a mechanical inversion of
+   light values. Every text/background pair below was checked with the same
+   contrast script used for the light palette in PB-055 (still ≥4.5:1 for
+   text, ≥3:1 for icons/dots). --action had to get brighter to read as text
+   on a near-black surface, which then made white button text fail against
+   it (2:1) — so filled buttons pair --action with the new --on-action
+   (near-black) instead of white; same fix applied to --danger/--on-danger.
+   Applies when the user's OS prefers dark AND they haven't explicitly picked
+   Light, or when they've explicitly picked Dark (see useThemeStore). */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --ink: #e7e9e5;
+    --bg: #14171a;
+    --surface: #1c2024;
+    --line: #343a40;
+    --muted: #98a1a8;
+    --action: #2ecb98;
+    --on-action: #0a120e;
+    --flag: #d99a3e;
+    --flag-text: #e0a352;
+    --danger: #e5665a;
+    --on-danger: #170403;
+    --win: #2ecb98;
+
+    --stage-wishlist: #9aa1a8;
+    --stage-applied: #6fa3d6;
+    --stage-oa: #a98ad6;
+    --stage-interviewing: #d99a3e;
+    --stage-offer: #2ecb98;
+    --stage-rejected: #8b9298;
+
+    --shadow-resting: 0 1px 2px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.04);
+    --shadow-elevated: 0 2px 4px rgba(0, 0, 0, 0.45), 0 4px 10px rgba(0, 0, 0, 0.5),
+      0 0 0 1px rgba(255, 255, 255, 0.06);
+    --shadow-popover: 0 4px 8px rgba(0, 0, 0, 0.5), 0 10px 24px rgba(0, 0, 0, 0.55),
+      0 0 0 1px rgba(255, 255, 255, 0.08);
+  }
+}
+
+:root[data-theme='dark'] {
+  --ink: #e7e9e5;
+  --bg: #14171a;
+  --surface: #1c2024;
+  --line: #343a40;
+  --muted: #98a1a8;
+  --action: #2ecb98;
+  --on-action: #0a120e;
+  --flag: #d99a3e;
+  --flag-text: #e0a352;
+  --danger: #e5665a;
+  --on-danger: #170403;
+  --win: #2ecb98;
+
+  --stage-wishlist: #9aa1a8;
+  --stage-applied: #6fa3d6;
+  --stage-oa: #a98ad6;
+  --stage-interviewing: #d99a3e;
+  --stage-offer: #2ecb98;
+  --stage-rejected: #8b9298;
+
+  --shadow-resting: 0 1px 2px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  --shadow-elevated: 0 2px 4px rgba(0, 0, 0, 0.45), 0 4px 10px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.06);
+  --shadow-popover: 0 4px 8px rgba(0, 0, 0, 0.5), 0 10px 24px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+@keyframes streak-chip-pulse {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.streak-chip-pulse {
+  animation: streak-chip-pulse 500ms ease-out;
+}
+
+@keyframes confetti-piece-fall {
+  0% {
+    transform: translateY(-10px) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(120px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.confetti-piece {
+  animation: confetti-piece-fall 900ms ease-in forwards;
+}
+
+/* Catch-all for CSS transitions/animations not individually gated in JS
+   (Sheet/Modal slide-in, hover states, dnd-kit's own transforms) — the
+   JS-driven ones (StreakChip pulse, ConfettiBurst, PracticeMode flip, chart
+   entrance animations) already check prefers-reduced-motion themselves and
+   skip rendering the animation/prop entirely, so this is redundant-but-safe
+   for those and the only fix for everything else. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

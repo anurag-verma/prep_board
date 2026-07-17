@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm test *)",
+      "Bash(npm run *)",
+      "Bash(npm view *)",
+      "Bash(npx --yes playwright --version)",
+      "Read(//c/Users/anura/AppData/Local/Temp/claude/d--prep-board/2e95143d-f1c5-4250-ba23-111b8b3ad5d4/scratchpad/**)",
+      "Bash(node shot.mjs)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" --max-time 2 http://localhost:5173/)",
+      "Bash(node shot3.mjs)",
+      "Bash(identify public/favicon.png public/assets/prep_board_logo.png)",
+      "Bash(powershell -c \"\")",
+      "Bash(grep -iE \"^\\(sparkles|arrow-right-circle|git-branch|calendar-plus|message-square|sticky-note|plus-circle\\)\\\\.mjs$\")"
+    ]
+  },
+  "enabledPlugins": {
+    "frontend-design@claude-code-plugins": true
+  }
+}

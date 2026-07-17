@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell -c \"Get-ChildItem d:\\\\prep_board\")",
+      "Bash(npm --version)",
+      "Bash(npm create *)",
+      "Bash(npx --yes create-vite@latest /c/Users/anura/AppData/Local/Temp/claude/d--prep-board/2e95143d-f1c5-4250-ba23-111b8b3ad5d4/scratchpad/scaffold --template react-ts)",
+      "Bash(npx --yes create-vite@latest D:/prep_scaffold --template react-ts)",
+      "Read(//d//**)",
+      "Bash(cp -r /c/Users/anura/AppData/Local/Temp/prep_scaffold/. /d/prep_board/)",
+      "Bash(rm -rf /c/Users/anura/AppData/Local/Temp/prep_scaffold)",
+      "Bash(curl -sI https://registry.npmjs.org/ --max-time 5)",
+      "Bash(npm install *)",
+      "Bash(npm run *)",
+      "Bash(npm test *)",
+      "Bash(powershell -c 'Get-Process node -ErrorAction SilentlyContinue | Where-Object {$_.MainWindowTitle -eq '\\\\'''\\\\''} | Stop-Process -Force')",
+      "Bash(taskkill //F //IM node.exe //T)",
+      "Bash(npm view *)"
+    ]
+  }
+}
